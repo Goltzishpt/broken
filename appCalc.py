@@ -181,20 +181,16 @@ class Calculator(QWidget):
         if self.label.text() == '0':
             self.label.setText(number)
             self.save_operation.append(number)
-            print(self.save_operation)
         else:
             self.label.setText(self.label.text() + number)
             self.save_operation.append(number)
-            print(self.save_operation)
 
     def func_operation(self, operation):
         if len(self.save_operation) > 0:
             if self.save_operation[-1] in '0123456789':
                 self.save_operation.append(operation)
-                print(self.save_operation)
             else:
                 self.save_operation[-1] = operation
-                print(self.save_operation)
         else:
             self.label.setText('0')
         self.label.setText('0')
@@ -210,7 +206,6 @@ class Calculator(QWidget):
                     del self.save_operation[-1]
             else:
                 self.label.setText('0')
-                print(len(self.save_operation))
                 if len(self.save_operation) != 0 and self.save_operation[-1] not in '*-+/':
                     del self.save_operation[-1]
 
@@ -219,10 +214,7 @@ class Calculator(QWidget):
 
     def func_c(self):
         self.save_operation = []
-        print(self.save_operation)
         self.label.setText('0')
-        print(self.label.setText)
-        # обнуление
         pass
 
     def func_percent(self):
@@ -231,28 +223,18 @@ class Calculator(QWidget):
 
     def func_equal(self):
         self.result = ''
-        print(1)
         self.result += ''.join(self.save_operation)
-        print(2)
         if self.result[-1] == '0' and self.result[-2] == '/':
-            print(3)
             self.label.setText('Division by zero!')
-            print(4)
         else:
-            print(5)
             # проверка на окончание и начало со знака
             if self.result[0] not in '0123456789':
-                print(6)
                 self.result = self.result[1:]
-                print(7)
             if self.result[-1] not in '0123456789':
                 self.result = self.result[:-1]
-                print(8)
             self.result_it = eval(self.result)
-            print(9)
             self.label.setText(str(self.result_it))
             self.save_operation = []
-            print(10)
 
 
 if __name__ == '__main__':
