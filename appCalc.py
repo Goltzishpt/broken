@@ -225,9 +225,11 @@ class Calculator(QWidget):
     def func_equal(self):
         result = ''
         result += ''.join(self.save_operation)
+        print(result)
         print(result[-1], result[-2])
-        if result[-1] == '0' or result[-2] == '/':
+        if result[-1] == '0' and result[-2] == '/':
             self.label.setText('Division by zero!')
+            print(result)
         else:
             print(result)
             # проверка на окончание и начало со знака
@@ -236,7 +238,8 @@ class Calculator(QWidget):
             if result[-1] not in '0123456789':
                 result = result[:-1]
                 print(result)
-            result_it = eval(result)
+            result_it = float(eval(result))
+            print(result_it)
             self.label.setText(str(result_it))
             self.save_operation = []
             print(self.save_operation)
