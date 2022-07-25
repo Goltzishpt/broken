@@ -189,14 +189,13 @@ class Calculator(QWidget):
         if len(self.save_operation) > 0:
             if self.save_operation[-1] in '0123456789':
                 self.save_operation.append(operation)
+                print(self.save_operation)
             else:
                 self.save_operation[-1] = operation
+                print(self.save_operation)
         else:
             self.label.setText('0')
         self.label.setText('0')
-
-
-
 
     def func_del(self):
         if self.label.text() != '0':
