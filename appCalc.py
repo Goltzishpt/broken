@@ -206,11 +206,14 @@ class Calculator(QWidget):
         if self.label.text() != '0':
             if len(self.label.text()) > 1:
                 self.label.setText(self.label.text()[:-1])
-                del self.save_operation[-1]
+                if len(self.save_operation) != 0 and self.save_operation[-1] not in '*-+/':
+                    del self.save_operation[-1]
             else:
                 self.label.setText('0')
-                if self.save_operation[-1] not in '*-+/':
+                print(len(self.save_operation))
+                if len(self.save_operation) != 0 and self.save_operation[-1] not in '*-+/':
                     del self.save_operation[-1]
+
 
 
 
@@ -238,7 +241,7 @@ class Calculator(QWidget):
             if result[-1] not in '0123456789':
                 result = result[:-1]
                 print(result)
-            result_it = float(eval(result))
+            result_it = eval(result)
             print(result_it)
             self.label.setText(str(result_it))
             self.save_operation = []
