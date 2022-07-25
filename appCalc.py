@@ -197,6 +197,7 @@ class Calculator(QWidget):
 
     def func_del(self):
         # удаление одного символа
+        print('new commit')
         pass
 
     def func_c(self):
