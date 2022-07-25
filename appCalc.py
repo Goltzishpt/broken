@@ -173,21 +173,28 @@ class Calculator(QWidget):
         #
         self.button_equal.clicked.connect(lambda: self.func_equal())
 
+        # del c
+        self.button_del.clicked.connect(lambda: self.func_del())
+
 
     def write_number(self, number):
         if self.label.text() == '0':
             self.label.setText(number)
             self.save_operation.append(number)
+            print(self.save_operation)
         else:
             self.label.setText(self.label.text() + number)
             self.save_operation.append(number)
+            print(self.save_operation)
 
     def func_operation(self, operation):
         if len(self.save_operation) > 0:
             if self.save_operation[-1] in '0123456789':
                 self.save_operation.append(operation)
+                print(self.save_operation)
             else:
                 self.save_operation[-1] = operation
+                print(self.save_operation)
         else:
             self.label.setText('0')
         self.label.setText('0')
@@ -196,8 +203,16 @@ class Calculator(QWidget):
 
 
     def func_del(self):
-        # удаление одного символа
-        pass
+        if self.label.text() != '0':
+            if len(self.label.text()) > 1:
+                self.label.setText(self.label.text()[:-1])
+                del self.save_operation[-1]
+            else:
+                self.label.setText('0')
+                if self.save_operation[-1] not in '*-+/':
+                    del self.save_operation[-1]
+
+
 
     def func_c(self):
         # обнуление
@@ -224,6 +239,7 @@ class Calculator(QWidget):
             result_it = eval(result)
             self.label.setText(str(result_it))
             self.save_operation = []
+            print(self.save_operation)
 
 
 if __name__ == '__main__':
