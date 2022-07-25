@@ -175,7 +175,7 @@ class Calculator(QWidget):
 
         # del c
         self.button_del.clicked.connect(lambda: self.func_del())
-
+        self.button_c.clicked.connect(lambda: self.func_c())
 
     def write_number(self, number):
         if self.label.text() == '0':
@@ -218,6 +218,10 @@ class Calculator(QWidget):
 
 
     def func_c(self):
+        self.save_operation = []
+        print(self.save_operation)
+        self.label.setText('0')
+        print(self.label.setText)
         # обнуление
         pass
 
@@ -226,26 +230,29 @@ class Calculator(QWidget):
         pass
 
     def func_equal(self):
-        result = ''
-        result += ''.join(self.save_operation)
-        print(result)
-        print(result[-1], result[-2])
-        if result[-1] == '0' and result[-2] == '/':
+        self.result = ''
+        print(1)
+        self.result += ''.join(self.save_operation)
+        print(2)
+        if self.result[-1] == '0' and self.result[-2] == '/':
+            print(3)
             self.label.setText('Division by zero!')
-            print(result)
+            print(4)
         else:
-            print(result)
+            print(5)
             # проверка на окончание и начало со знака
-            if result[0] not in '0123456789':
-                result = result[1:]
-            if result[-1] not in '0123456789':
-                result = result[:-1]
-                print(result)
-            result_it = eval(result)
-            print(result_it)
-            self.label.setText(str(result_it))
+            if self.result[0] not in '0123456789':
+                print(6)
+                self.result = self.result[1:]
+                print(7)
+            if self.result[-1] not in '0123456789':
+                self.result = self.result[:-1]
+                print(8)
+            self.result_it = eval(self.result)
+            print(9)
+            self.label.setText(str(self.result_it))
             self.save_operation = []
-            print(self.save_operation)
+            print(10)
 
 
 if __name__ == '__main__':
