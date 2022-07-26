@@ -1,5 +1,5 @@
-# Кнопки %, c, del
-# Вывод после операций и равно
+# Кнопки %
+# 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
 
 
 import sys
@@ -178,7 +178,7 @@ class Calculator(QWidget):
         self.button_c.clicked.connect(lambda: self.func_c())
 
     def write_number(self, number):
-        if self.label.text() == '0':
+        if self.label.text() == '0' or self.save_operation[-1] in '/*-+':
             self.label.setText(number)
             self.save_operation.append(number)
         else:
@@ -187,15 +187,15 @@ class Calculator(QWidget):
 
     def func_operation(self, operation):
         if len(self.save_operation) > 0:
-            if self.save_operation[-1] in '0123456789':
+            if self.save_operation[-1] in '0123456789':  # если последняя цифра - вводится операция
                 self.save_operation.append(operation)
                 print(self.save_operation)
-            else:
+            else:                                        # если последний опранд - он заменяется
                 self.save_operation[-1] = operation
                 print(self.save_operation)
         else:
             self.label.setText('0')
-        self.label.setText('0')
+
 
     def func_del(self):
         if self.label.text() != '0':
@@ -212,7 +212,7 @@ class Calculator(QWidget):
         self.save_operation = []
         self.label.setText('0')
 
-    def func_dot(self):
+    def func_dot(self):  # ця хуйня вроде работает
         flag = False
         if len(self.save_operation) > 0:
             # -------------------------------------------
@@ -240,9 +240,6 @@ class Calculator(QWidget):
             self.save_operation.append('.')
             self.label.setText('0.')
             print(self.save_operation)
-
-
-
 
     def func_percent(self):
         # функция процента
