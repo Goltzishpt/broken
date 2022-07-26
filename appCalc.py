@@ -1,5 +1,5 @@
 # Кнопки %
-# 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
+# 
 
 
 import sys
