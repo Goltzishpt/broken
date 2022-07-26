@@ -178,12 +178,17 @@ class Calculator(QWidget):
         self.button_c.clicked.connect(lambda: self.func_c())
 
     def write_number(self, number):
-        if self.label.text() == '0' or self.label.text() == 'Division by zero!' or self.save_operation[-1] in '/*-+':
+        if (self.label.text() == '0' or self.label.text() == '0.0' or self.label.text() == 'Division by zero!'
+                or self.save_operation[-1] in '/*-+'):
             self.label.setText(number)
             self.save_operation.append(number)
         else:
             self.label.setText(self.label.text() + number)
             self.save_operation.append(number)
+        if self.save_operation[0] == '0' and self.save_operation != []:
+            del self.save_operation[0]
+
+
 
 
     def func_operation(self, operation):
@@ -253,8 +258,7 @@ class Calculator(QWidget):
             self.label.setText('Division by zero!')
             self.save_operation = []
             print(self.save_operation)
-        else:
-            # проверка на окончание и начало со знака
+        else:  # проверка на окончание и начало со знака
             if self.result[0] not in '0123456789':
                 self.result = self.result[1:]
                 print(self.save_operation)
