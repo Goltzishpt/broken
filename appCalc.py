@@ -162,13 +162,13 @@ class Calculator(QWidget):
         self.button_8.clicked.connect(lambda: self.write_number(self.button_8.text()))
         self.button_9.clicked.connect(lambda: self.write_number(self.button_9.text()))
         self.button_0.clicked.connect(lambda: self.write_number(self.button_0.text()))
-        self.button_dot.clicked.connect(lambda: self.write_number(self.button_dot.text()))
 
         # кнопки операторы
         self.button_plus.clicked.connect(lambda: self.func_operation(self.button_plus.text()))
         self.button_minus.clicked.connect(lambda: self.func_operation(self.button_minus.text()))
         self.button_div.clicked.connect(lambda: self.func_operation(self.button_div.text()))
         self.button_star.clicked.connect(lambda: self.func_operation(self.button_star.text()))
+        self.button_dot.clicked.connect(lambda: self.func_dot())
 
         #
         self.button_equal.clicked.connect(lambda: self.func_equal())
@@ -208,13 +208,41 @@ class Calculator(QWidget):
                 if len(self.save_operation) != 0 and self.save_operation[-1] not in '*-+/':
                     del self.save_operation[-1]
 
-
-
-
     def func_c(self):
         self.save_operation = []
         self.label.setText('0')
-        pass
+
+    def func_dot(self):
+        flag = False
+        if len(self.save_operation) > 0:
+            # -------------------------------------------
+            for x in reversed(self.save_operation):
+                if x not in '/*-+':
+                    if x == '.':
+                        flag = True
+                        break
+                    else:
+                        continue
+                else:
+                    break
+            # --------------------------------------------
+            if flag == False and self.save_operation[-1] in '0123456789':
+                self.save_operation.append('.')
+                self.label.setText(self.label.text() + '.')
+                print(self.save_operation)
+            elif flag == False and self.save_operation[-1] not in '0123456789':
+                self.save_operation.append('0')
+                self.save_operation.append('.')
+                self.label.setText('0.')
+                print(self.save_operation)
+        else:  # ця херня работает
+            self.save_operation.append('0')
+            self.save_operation.append('.')
+            self.label.setText('0.')
+            print(self.save_operation)
+
+
+
 
     def func_percent(self):
         # функция процента
