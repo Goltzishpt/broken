@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 # Кнопки %
 # разобраться с гитом, сменить репозиторий
 # разобраться с пайчармом
+=======
+# Кнопка %
+# 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
+>>>>>>> 6880d9e (добавила приколов в свою программу)
 
 
 import sys
@@ -31,9 +36,21 @@ class Calculator(QWidget):
         font.setWeight(75)
         self.label.setFont(font)
         self.label.setGeometry(QRect(0, 0, 310, 60))
-        self.label.setStyleSheet("background-color: rgb(223, 140, 255); color: rgb(255, 255, 255); padding: 17px 0 0 0")
+        self.label.setStyleSheet("background-color: rgb(223, 140, 255); color: rgb(255, 255, 255); padding: 28px 0 0 0")
         self.label.move(10, 20)
         self.label.setAlignment(Qt.AlignRight)
+
+        # вывод
+        self.label_2 = QLabel('0', self)
+        font2 = QFont()
+        font2.setPointSize(8)
+        font2.setBold(True)
+        font2.setWeight(75)
+        self.label_2.setFont(font2)
+        self.label_2.setGeometry(QRect(0, 0, 310, 30))
+        self.label_2.setStyleSheet("background-color: rgb(223, 140, 255); color: rgb(255, 255, 255); padding: 10px 5px 0 0")
+        self.label_2.move(10, 20)
+        self.label_2.setAlignment(Qt.AlignRight)
 
         # кнопка С
         self.button_c = QPushButton('c', self)
@@ -179,30 +196,38 @@ class Calculator(QWidget):
         self.button_c.clicked.connect(lambda: self.func_c())
 
     def write_number(self, number):
-        if (self.label.text() == '0' or self.label.text() == '0.0' or self.label.text() == 'Division by zero!'
-                or self.save_operation[-1] in '/*-+'):
+        print(1)
+        if (self.label.text() == '0' or self.label.text() == '0.0' or self.label.text() == 'Division by zero!' or
+                (self.save_operation != [] and self.save_operation[-1] in '/*-+') or self.save_operation == []):
+            print(2)
             self.label.setText(number)
             self.save_operation.append(number)
         else:
+            print(3)
             self.label.setText(self.label.text() + number)
             self.save_operation.append(number)
-        if self.save_operation[0] == '0' and self.save_operation != []:
+            print(4)
+            print(self.save_operation)
+        if len(self.save_operation) >= 2 and self.save_operation[0] == '0' and self.save_operation[1] != '.':
+            print(5)
             del self.save_operation[0]
-
-
-
+            print(self.save_operation)
+        self.display_2(self.save_operation)
 
     def func_operation(self, operation):
-        if len(self.save_operation) > 0:
+        if len(self.save_operation) == 0 and operation == '-':
+            self.save_operation.append(operation)
+            self.label.setText(operation)
+        elif len(self.save_operation) > 0:
             if self.save_operation[-1] in '0123456789':  # если последняя цифра - вводится операция
                 self.save_operation.append(operation)
                 print(self.save_operation)
-            else:                                        # если последний опранд - он заменяется
+            else:                                        # если последний опeранд - он заменяется
                 self.save_operation[-1] = operation
                 print(self.save_operation)
         else:
             self.label.setText('0')
-
+        self.display_2(self.save_operation)
 
     def func_del(self):
         if self.label.text() != '0':
@@ -214,10 +239,16 @@ class Calculator(QWidget):
                 self.label.setText('0')
                 if len(self.save_operation) != 0 and self.save_operation[-1] not in '*-+/':
                     del self.save_operation[-1]
+            self.display_2(self.save_operation)
+
+
+
+
 
     def func_c(self):
         self.save_operation = []
         self.label.setText('0')
+        self.display_2(['0'])
 
     def func_dot(self):  # ця хуйня вроде работает
         flag = False
@@ -260,16 +291,25 @@ class Calculator(QWidget):
             self.save_operation = []
             print(self.save_operation)
         else:  # проверка на окончание и начало со знака
-            if self.result[0] not in '0123456789':
+            if self.result[0] not in '-0123456789':
                 self.result = self.result[1:]
                 print(self.save_operation)
             if self.result[-1] not in '0123456789':
                 self.result = self.result[:-1]
-                print(self.save_operation)
+                print(self.result)
             self.result_it = eval(self.result)
             self.label.setText(str(self.result_it))
+            self.display_2(list(self.result))
             print(self.save_operation)
             self.save_operation = []
+            print(self.save_operation)
+
+
+    def display_2(self, mean):
+        display2 = ''.join(mean)
+        self.label_2.setText(display2)
+        if self.save_operation == []:
+            self.label_2.setText(display2)
 
 
 if __name__ == '__main__':
